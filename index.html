@@ -6,27 +6,102 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-
+    if (profile.active) {
+        if (reason) {
+            profile.active = false;
+            profile.reason = reason;
+            return profile;
+        } else {
+            return "confirm status manually";
+        }
+    } else {
+        delete profile.reason;
+        profile.active = true;
+        return profile;
     }
+}
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
-
+      if (x < 1 || x > 3 || y < 1 || y > 3) {
+        return "invalid coordinates";
+    } else {
+        let row = grid[y - 1];
+        if (row[x - 1] === "🟥") {
+            return "🟥 💀";
+        } else {
+            return "🟦 🥳";
+        }
+    }
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+      let newObj = {};
+  
+  for (let key in obj) {
+    let newKey = key;
+    
+    if (key.length > 9) {
+      return "shorten all prop names to 9 chars or less";
+    }
+    
+    if (obj[key] === 0) {
+      newObj[key] = false;
+    } else if (obj[key] === 1) {
+      newObj[key] = true;
+    } else if (obj[key] === null) {
+      delete newObj[key];
+    } else {
+      newObj[key] = obj[key];
+    }
+  }
+  
+  return newObj;
     }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
+      if (text === "" || forbidden.length === 0) {
+        return text;
+    }
 
+    let words = text.split(" ");
+    
+    for (let i = 0; i < words.length; i++) {
+        if (forbidden.includes(words[i])) {
+            let forbiddenWord = words[i];
+            let replacement = "";
+            
+            for (let j = 0; j < forbiddenWord.length; j++) {
+                replacement += "x";
+            }
+            
+            words[i] = replacement;
+        }
+    }
+    
+    return words.join(" ");
     }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
+      let formNumber = "";
+  
+  for (let i = num.length - 1; i >= 0; i--) {
+      if (formNumber.length === 0) {
+          formNumber = ")" + num[i] + formNumber;
+      } else if (formNumber.length === 4) {
+          formNumber = " " + num[i] + formNumber;
+      } else if (formNumber.length === 8) {
+          formNumber = "-" + num[i] + formNumber;
+      } else {
+          formNumber = num[i] + formNumber;
+      }
+  }
 
+  formNumber = "(" + formNumber;
+  return formNumber;
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
